@@ -1,2 +1,3 @@
 library(testthat)
-test_check("BerlinData")
+# uncomment once there are tests
+#test_check("BerlinData")

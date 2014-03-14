@@ -6,4 +6,10 @@ Date: 2014-03-14
 Author: ----
 Maintainer: Dirk Schumacher <mail@dirk-schumacher.net>
 Description: It is exactly what you think it is.
-License: GPLv3
+License: MIT + file LICENSE
+LazyLoad: yes
+ZipData: yes
+Suggests:
+    testthat
+Depends:
+    R (>= 2.15)
