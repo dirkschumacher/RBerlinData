@@ -2,7 +2,7 @@
 BerlinData
 ===========
 
-This is currently the development version of the `R` Package `BerlinData` which provides open-datasets of Berlin 
+This is currently the development version of the `R` Package `BerlinData` which provides open datasets of Berlin 
 and also easy access to open APIs.
 
 ## Versioning
