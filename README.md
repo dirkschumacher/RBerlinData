@@ -23,7 +23,7 @@ devtools::install_github("dirkschumacher/RBerlinData")
 
 # Datasets
 
-* Stolpersteine. See `?stolpersteine` for further information.
+* Stolpersteine of Berlin. See `?stolpersteine` and [Wikipedia](http://en.wikipedia.org/wiki/Stolperstein) for further information.
 
 # Versioning
 It uses [Semantic Versioning 2](http://semver.org/spec/v2.0.0.html) for version numbering.
