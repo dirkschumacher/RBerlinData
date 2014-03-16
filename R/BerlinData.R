@@ -1,4 +1,4 @@
-#' Information on the Stopersteine in Berlin.
+#' Stopersteine data in Berlin
 #'
 #' A dataset containing information on all persons on the famous Stolpersteine 
 #' in Berlin.
