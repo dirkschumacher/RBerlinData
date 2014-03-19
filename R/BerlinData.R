@@ -29,7 +29,7 @@
 #' @keywords Stolpersteine, Gedenken, Geschichte, Nationalsozialismus,
 #'  Judenverfolgung 
 #' @name stolpersteine
-#' @usage data(stolpersteine)
+#' @usage fetch("stolpersteine")
 #' @format A data frame with 5328 rows and 14 variables
 #' @source
 #' 
@@ -57,6 +57,7 @@
 #' save(stolpersteine, file = "data/stolpersteine.rda")
 #' }
 NULL
+
 
 
 

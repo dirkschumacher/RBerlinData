@@ -2,7 +2,7 @@
 \docType{data}
 \name{stolpersteine}
 \alias{stolpersteine}
-\title{Information on the Stopersteine in Berlin.}
+\title{Stopersteine data in Berlin}
 \format{A data frame with 5328 rows and 14 variables}
 \source{
 Website of the project: \url{http://www.stolpersteine-berlin.de/}
@@ -12,7 +12,7 @@ Website of data:
 Version: 2013-08-16 (6f2faa4e-9249-4e1b-a45b-b30799e20768)
 }
 \usage{
-data(stolpersteine)
+fetch("stolpersteine")
 }
 \description{
 A dataset containing information on all persons on the famous Stolpersteine
