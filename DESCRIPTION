@@ -1,7 +1,7 @@
 Package: BerlinData
 Type: Package
 Title: Offers datasets and API access to Berlin related data
-Version: 1.0.0
+Version: 0.0.0
 Date: 2014-03-14
 Author: ----
 Maintainer: Dirk Schumacher <mail@dirk-schumacher.net>
