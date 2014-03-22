@@ -12,4 +12,5 @@ ZipData: yes
 Suggests:
     testthat
 Depends:
+    R (>= 2.13.0),
     XML
