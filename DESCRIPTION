@@ -6,10 +6,10 @@ Date: 2014-03-14
 Author: ----
 Maintainer: Dirk Schumacher <mail@dirk-schumacher.net>
 Description: It is exactly what you think it is.
-License: MIT + file LICENSE
+License: MIT
 LazyLoad: yes
 ZipData: yes
 Suggests:
     testthat
 Depends:
-    R (>= 2.15)
+    XML
