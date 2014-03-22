@@ -22,12 +22,11 @@ devtools::install_github("dirkschumacher/RBerlinData")
 
 # Usage
 ```R
-results <- berlin_data(query = "stolpersteine")
-summary(results)
-resources <- resources(results[[2]])
-summary(resources)
-data <- fetch(resources[[1]]) # fetches the first reseource into a data.frame
-summary(data)
+# still under development
+result <- berlin_data(query = "stolpersteine")
+dataset <- load_metadata(result[[2]]$link)
+resources <- resources(dataset)
+data <- fetch(resources[[2]])
 ```
 
 # Versioning
