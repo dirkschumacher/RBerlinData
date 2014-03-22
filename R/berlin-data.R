@@ -12,7 +12,7 @@ NULL
 #' result <- berlin_data(query = "stolpersteine")
 #' dataset <- load_metadata(result[[2]]$link)
 #' resources <- resources(dataset)
-#' data <- fetch(resources[[2]])
+#' data <- download(resources[[1]])
 #' 
 berlin_data <- function(query = NA, url = NA) {
   stopifnot(length(query) == 1 && length(url) == 1)

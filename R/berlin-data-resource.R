@@ -3,7 +3,15 @@ summary.berlin_data_resource <- function(object, ...) {
   object
 }
 
+#' Downloads a resource
 #' @export
-fetch.berlin_data_resource <- function(resource) {
+#' @method download berlin_data_resource
+download.berlin_data_resource <- function(resource, ...) {
   NULL
+}
+
+#' Downloads a resource
+#' @export
+download <- function(resource, ...) {
+  UseMethod("download")
 }

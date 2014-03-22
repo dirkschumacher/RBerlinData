@@ -3,10 +3,10 @@
 \alias{load_metadata}
 \title{Parses and downloads the meta data for a dataset}
 \usage{
-load_metadata(url)
+load_metadata(dataset_url)
 }
 \arguments{
-  \item{url}{the url of the dataset}
+  \item{dataset_url}{the url of the dataset}
 }
 \description{
 Parses and downloads the meta data for a dataset

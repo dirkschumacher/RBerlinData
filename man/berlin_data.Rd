@@ -17,6 +17,6 @@ Only one of the parameters can have a value.
 result <- berlin_data(query = "stolpersteine")
 dataset <- load_metadata(result[[2]]$link)
 resources <- resources(dataset)
-data <- fetch(resources[[2]])
+data <- download(resources[[1]])
 }
 
