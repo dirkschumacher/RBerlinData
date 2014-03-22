@@ -27,7 +27,7 @@ test_that("search_data correctly finds items", {
 test_that("search_data extracts the correct information", {
   data <- search_data("wochen", xml_url = "test-rss-feed.xml")[[1]]
   expect_equivalent(data$link, "http://daten.berlin.de/datensaetze/berliner-wochen-und-tr%C3%B6delm%C3%A4rkte-2013")
-  expect_equivalent(data$title, "Berliner Wochen- und Trödelmärkte 2013")
-  expect_equivalent(data$description, "Wochenmarkt, Trödelmarkt, Flohmarkt, Antikmarkt")
+  expect_equivalent(data$title, "Berliner Wochen- und Troedelmaerkte 2013")
+  expect_equivalent(data$description, "Wochenmarkt, Troedelmarkt, Flohmarkt, Antikmarkt")
 })
 
