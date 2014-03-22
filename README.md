@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/dirkschumacher/RBerlinData.png?branch=master)](https://travis-ci.org/dirkschumacher/RBerlinData)
+[![Build Status](https://travis-ci.org/dirkschumacher/RBerlinData.svg?branch=master)](https://travis-ci.org/dirkschumacher/RBerlinData)
 BerlinData
 ===========
 
