@@ -1,11 +1,14 @@
+#' Gets the resources from a dataset
 #' @export 
 #' @method resources berlin_data_dataset
-resources.berlin_data_dataset <- function(dataset, ...) {
-  dataset$resources
+#' @param object a dataset with a list of resources
+resources.berlin_data_dataset <- function(object) {
+  object$resources
 }
 
-#' Gets the resources of an object
+#' Gets the resources from an object
+#' @param object an object with resources
 #' @export
-resources <- function(dataset, ...) {
+resources <- function(object) {
   UseMethod("resources")
 }

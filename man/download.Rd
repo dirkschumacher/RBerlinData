@@ -3,7 +3,10 @@
 \alias{download}
 \title{Downloads a resource}
 \usage{
-download(resource, ...)
+download(resource)
+}
+\arguments{
+  \item{resource}{a resource which can be downloaded}
 }
 \description{
 Downloads a resource
