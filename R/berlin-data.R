@@ -1,3 +1,6 @@
+#' @import XML
+NULL
+
 #' Queries daten.berlin.de
 #' 
 #' Only one of the parameters can have a value.
