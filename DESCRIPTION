@@ -10,6 +10,7 @@ License: MIT
 Depends:
     R (>= 2.13.0)
 Imports:
-    XML (>= 3.98-1.1)
+    XML (>= 3.98-1.1),
+    stringr
 Suggests:
     testthat

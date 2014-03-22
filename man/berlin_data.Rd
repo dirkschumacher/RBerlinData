@@ -8,9 +8,15 @@ berlin_data(query = NA, url = NA)
 \arguments{
   \item{query}{a query string to search daten.berlin.de}
 
-  \item{url}{a url pointing to a conrete dataset}
+  \item{url}{a url pointing to a concrete dataset}
 }
 \description{
 Only one of the parameters can have a value.
+}
+\examples{
+result <- berlin_data(query = "stolpersteine")
+dataset <- load_metadata(result[[2]]$link)
+resources <- resources(dataset)
+data <- fetch(resources[[2]])
 }
 
