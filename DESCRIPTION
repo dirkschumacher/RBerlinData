@@ -5,10 +5,9 @@ Version: 0.0.0
 Date: 2014-03-14
 Author: Kate McCurdy, Dirk Schumacher
 Maintainer: Dirk Schumacher <mail@dirk-schumacher.net>
-Description: 
-This package provides easy access to http://daten.berlin.de
-It allows you to search through the data catalogue and to download
-the data directly from within R.
+Description: This package provides easy access to http://daten.berlin.de
+    It allows you to search through the data catalogue and to download
+    the data directly from within R.
 License: MIT
 Depends:
     R (>= 2.13.0)
