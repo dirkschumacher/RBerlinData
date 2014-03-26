@@ -29,26 +29,37 @@ parseMetaData <- function(dataset_url) {
   title_nodeset <- xpathApply(parsed_data,  "//h1[@id='page-title']")
   title <- str_trim(xmlValue(title_nodeset[[1]]))
   resources_nodeset <- getNodeSet(parsed_data, "//div[@class='dataset_ressource']")
-  resources <- lapply(resources_nodeset, function(res) {
+  resources_list <- lapply(resources_nodeset, function(res) {
     sub_doc <- xmlDoc(res)
     field_labels <- getNodeSet(sub_doc, "//div[@class='field-label']")
     field_items <- getNodeSet(sub_doc, "//div[@class='field-items']")
-    res_url <- unlist(xpathApply(xmlDoc(field_items[[1]]),  
-                                 "//a[@href]", xmlGetAttr, "href"))
-    hash <- str_trim(xmlValue(field_items[[2]]))
-    data_format <- str_trim(xmlValue(field_items[[3]]))
-    language <- str_trim(xmlValue(field_items[[4]]))
-    structure(list(
-      url = res_url,
-      hash = hash,
-      format = data_format,
-      language = language
-    ), class = "berlin_data_resource")
+    cleaned_field_labels <- unlist(lapply(field_labels, function(l)str_trim(xmlValue(l))))
+    cleaned_field_items <- lapply(field_items, function(l)str_trim(xmlValue(l)))
+    findIndex <- function(search_key)grep(search_key, cleaned_field_labels, ignore.case = TRUE)
+    data_format_index <- findIndex("format")
+    hash_index <- findIndex("hash")
+    url_index <- findIndex("url")
+    language_index <- findIndex("sprache")
+    indexExists <- function(index)length(index) == 1 && index > 0
+    if (indexExists(url_index) && indexExists(hash_index) 
+        && indexExists(data_format_index)
+        && indexExists(language_index)) {
+      res_url <- unlist(xpathApply(xmlDoc(field_items[[url_index]]),  
+                                   "//a[@href]", xmlGetAttr, "href"))
+      structure(list(
+        url = res_url,
+        hash = cleaned_field_items[[hash_index]],
+        format = cleaned_field_items[[data_format_index]],
+        language = cleaned_field_items[[language_index]]
+      ), class = "berlin_data_resource")
+    } else {
+      NULL
+    }
   })
   
   structure(list(
     title = title,
-    resources = resources
+    resources = Filter(function(r)!is.null(r), resources_list)
   ), class = "berlin_data_dataset")
 }
 
