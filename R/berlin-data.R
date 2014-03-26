@@ -9,36 +9,20 @@ NULL
 #' @param url a url pointing to a concrete dataset
 #' @export
 #' @examples
-#' result <- berlin_data(query = "stolpersteine")
-#' dataset <- load_metadata(result[[2]]$link)
-#' resources <- resources(dataset)
-#' data <- download(resources[[1]])
+#' result <- searchBerlinData(query = "stolpersteine")
+#' dataset <- parseMetaData(result[[2]]$link)
+#' resource_list <- resources(dataset)
+#' data <- download(resource_list[[1]])
 #' 
-berlin_data <- function(query = NA, url = NA) {
-  stopifnot(length(query) == 1 && length(url) == 1)
-  if (is.na(query) && is.na(url)) {
-    stop("either query or url must have a character value")
-  }
-  if (!is.na(query) && !is.na(url)) {
-    stop("please user either query or url for data retrieval")
-  }
-  if (!is.na(query)) {
-    stopifnot(length(query) == 1 && is.character(query))
-  }
-  if (!is.na(url)) {
-    stopifnot(length(url) == 1 && is.character(url))
-  }
-  if (!is.na(query)) {
-    search_data(query)
-  } else if (!is.na(url)) {
-    load_metadata(url)
-  }
+searchBerlinData <- function(query = NA) {
+  stopifnot(length(query) == 1 && is.character(query))
+  search_data(query)
 }
 
 #' Parses and downloads the meta data for a dataset
 #' @param dataset_url the url of the dataset
 #' @export
-load_metadata <- function(dataset_url) {
+parseMetaData <- function(dataset_url) {
   stopifnot(length(dataset_url) == 1)
   stopifnot(is.character(dataset_url))
   parsed_data <- htmlParse(dataset_url)
@@ -61,6 +45,7 @@ load_metadata <- function(dataset_url) {
       language = language
     ), class = "berlin_data_resource")
   })
+  
   structure(list(
     title = title,
     resources = resources

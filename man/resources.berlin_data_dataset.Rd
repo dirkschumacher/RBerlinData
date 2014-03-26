@@ -6,7 +6,7 @@
 \method{resources}{berlin_data_dataset}(object)
 }
 \arguments{
-  \item{object}{a dataset with a list of resources}
+\item{object}{a dataset with a list of resources}
 }
 \description{
 Gets the resources from a dataset

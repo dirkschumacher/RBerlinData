@@ -6,7 +6,7 @@
 resources(object)
 }
 \arguments{
-  \item{object}{an object with resources}
+\item{object}{an object with resources}
 }
 \description{
 Gets the resources from an object
