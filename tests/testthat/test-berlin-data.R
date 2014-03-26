@@ -68,4 +68,3 @@ test_that("parseMetaData fails with wrong parameter", {
   expect_error(parseMetaData("http://google.com"))
   expect_error(parseMetaData(c("wat", "wat2")))
 })
-
