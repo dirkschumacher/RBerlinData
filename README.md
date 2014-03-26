@@ -23,10 +23,10 @@ devtools::install_github("dirkschumacher/RBerlinData")
 # Usage
 ```R
 # still under development
-result <- berlin_data(query = "stolpersteine")
-dataset <- load_metadata(result[[2]]$link)
-resources <- resources(dataset)
-data <- download(resources[[2]])
+result <- searchBerlinData(query = "stolpersteine")
+dataset <- parseMetaData(result[[2]]$link)
+resource_list <- resources(dataset)
+data <- download(resource_list[[1]])
 ```
 
 # Versioning
