@@ -13,7 +13,7 @@ NULL
 #' resource_list <- resources(dataset)
 #' data <- download(resource_list[[1]])
 #' 
-searchBerlinData <- function(query = NA) {
+searchBerlinData <- function(query) {
   stopifnot(length(query) == 1 && is.character(query))
   search_data(query)
 }

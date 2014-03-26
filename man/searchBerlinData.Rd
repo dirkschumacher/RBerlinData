@@ -3,7 +3,7 @@
 \alias{searchBerlinData}
 \title{Queries daten.berlin.de}
 \usage{
-searchBerlinData(query = NA)
+searchBerlinData(query)
 }
 \arguments{
 \item{query}{a query string to search daten.berlin.de}
