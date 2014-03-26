@@ -6,7 +6,7 @@
 \method{download}{berlin_data_resource}(resource)
 }
 \arguments{
-  \item{resource}{a resource of type berlin_data_resource}
+\item{resource}{a resource of type berlin_data_resource}
 }
 \description{
 Downloads a resource
