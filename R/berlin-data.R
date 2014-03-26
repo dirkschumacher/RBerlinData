@@ -6,7 +6,6 @@ NULL
 #' Only one of the parameters can have a value.
 #' 
 #' @param query a query string to search daten.berlin.de
-#' @param url a url pointing to a concrete dataset
 #' @export
 #' @examples
 #' result <- searchBerlinData(query = "stolpersteine")

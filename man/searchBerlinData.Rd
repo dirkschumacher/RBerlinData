@@ -7,8 +7,6 @@ searchBerlinData(query = NA)
 }
 \arguments{
 \item{query}{a query string to search daten.berlin.de}
-
-\item{url}{a url pointing to a concrete dataset}
 }
 \description{
 Only one of the parameters can have a value.
