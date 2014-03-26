@@ -58,7 +58,8 @@ parseMetaData <- function(dataset_url) {
   
   structure(list(
     title = title,
-    resources = Filter(function(r)!is.null(r), resources_list)
+    resources = structure(Filter(function(r)!is.null(r), resources_list), 
+                          class = "berlin_data_resource_list")
   ), class = "berlin_data_dataset")
 }
 

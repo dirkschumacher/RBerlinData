@@ -1,5 +1,15 @@
 context("berlin_data")
 
+# helper functions
+checkDataSet <- function(data, expected_title, expected_number_resources) {
+  expect_equivalent(class(data), "berlin_data_dataset")
+  expect_equivalent(data$title, expected_title)
+  expect_equivalent(length(data$resources), expected_number_resources)
+  lapply(data$resources, 
+         function(res)expect_equivalent(class(res), 
+                                        "berlin_data_resource"))
+}
+
 test_that("searchBerlinData query basic", {
   data <- searchBerlinData(query = "stolpersteine")
   expect_true(length(data) >= 1)
@@ -29,18 +39,10 @@ test_that("search_data extracts the correct information", {
   expect_equivalent(data$description, "Wochenmarkt, Troedelmarkt, Flohmarkt, Antikmarkt")
 })
 
-checkDataSet <- function(data, expected_title, expected_number_resources) {
-  expect_equivalent(class(data), "berlin_data_dataset")
-  expect_equivalent(data$title, expected_title)
-  expect_equivalent(length(data$resources), expected_number_resources)
-  lapply(data$resources, 
-         function(res)expect_equivalent(class(res), 
-                                        "berlin_data_resource"))
-}
-
 test_that("parseMetaData parses correctly the information", {
   url <- "./data/test-data-datasetpage.html"
   data <- parseMetaData(url)
+  expect_equivalent("berlin_data_resource_list", class(resources(data)))
   checkDataSet(data, expected_title = "Sportvereine und Sportangebote in Marzahn-Hellersdorf",
                expected_number_resources = 5)
   expect_equivalent(data$resources[[1]]$hash, "dd42aa49-0b9d-483f-a4c5-9ae561395773")
@@ -52,6 +54,7 @@ test_that("parseMetaData parses correctly the information", {
 test_that("parseMetaData parses correctly the information 2", {
   url <- "./data/data-datasetpage2.html"
   data <- parseMetaData(url)
+  expect_equivalent("berlin_data_resource_list", class(resources(data)))
   checkDataSet(data, expected_title = "Angebote der schulbezogenen Jugendarbeit und Jugendsozialarbeit",
                expected_number_resources = 9)
   expect_equivalent(data$resources[[1]]$hash, "1cec5a90-cc82-4351-9298-2ae90e2d86eb")
