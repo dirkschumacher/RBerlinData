@@ -8,14 +8,42 @@ NULL
 #' @param query a query string to search daten.berlin.de
 #' @export
 #' @examples
-#' result <- searchBerlinData(query = "stolpersteine")
-#' dataset <- parseMetaData(result[[2]]$link)
+#' result <- searchBerlinDatasets(query = "stolpersteine")
+#' dataset <- getDatasetMetaData(result[[2]])
 #' resource_list <- resources(dataset)
 #' data <- download(resource_list[[1]])
 #' 
-searchBerlinData <- function(query) {
+searchBerlinDatasets <- function(query) {
   stopifnot(length(query) == 1 && is.character(query))
-  search_data(query)
+  result <- search_data(query) 
+  result
+}
+
+#' Gets metadata for a dataset or list of datasets
+#' @param where where to look for metadata: can be a URL, \code{berlin_data_dataset_info}, of \code{berlin_data_list}
+#' @export
+getDatasetMetaData <- function(where) {
+  UseMethod("getDatasetMetaData")
+}
+
+getDatasetMetaData.berlin_data_list = function(data_list) {
+  stopifnot(length(data_list) >= 1)
+  result <- lapply(data_list, getDatasetMetaData)
+  attr(result, "class") <- "berlin_data_list"
+  result
+}
+
+getDatasetMetaData.berlin_data_dataset_info = function(dataset_info) {
+  stopifnot(length(dataset_info) == 1)
+  link <- dataset_info$link
+  result <- parseMetaData(link)
+  result
+}
+
+getDatasetMetaData.character = function(dataset_url) {
+  stopifnot(length(dataset_url) == 1)
+  result <- parseMetaData(dataset_url)
+  result
 }
 
 #' Parses and downloads the meta data for a dataset
@@ -69,14 +97,27 @@ parseMetaData <- function(dataset_url) {
 # param xml_url the url to the rss feed
 # usage Internal
 search_data <- function(query, 
-                     xml_url = "http://daten.berlin.de/datensaetze/rss.xml") {
-  feed = xmlParse(xml_url)
+                     xml.url = "http://daten.berlin.de/datensaetze/rss.xml") {
+  feed = tryCatch(xmlParse(xml.url),
+                  error=function(e) {
+                    if (xml.url=="http://daten.berlin.de/datensaetze/rss.xml") {
+                      message('Could not establish connection to daten.berlin.de')
+                      load('data/berlin-datasets.rda')
+                      message('Using stored list of Berlin datasets')
+                      message(paste0('Last updated: ', attr(feed, 'last_updated')))
+                    } else {
+                      stop(e)
+                    }
+                  })
   items = getNodeSet(feed, "//item")
   cleaned_items <- lapply(items, function(item) {
-    list(
-      description = xmlValue(getNodeSet(item, "description")[[1]]),
-      title = xmlValue(getNodeSet(item, "title")[[1]]),
-      link = xmlValue(getNodeSet(item, "link")[[1]])
+    structure(
+      list(
+        description = xmlValue(getNodeSet(item, "description")[[1]]),
+        title = xmlValue(getNodeSet(item, "title")[[1]]),
+        link = xmlValue(getNodeSet(item, "link")[[1]])
+      ),
+      class = "berlin_data_dataset_info"
     )
   })
   filtered_items <- Filter(function(item) {
