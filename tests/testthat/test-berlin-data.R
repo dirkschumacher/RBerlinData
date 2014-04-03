@@ -68,3 +68,31 @@ test_that("parseMetaData fails with wrong parameter", {
   expect_error(parseMetaData("http://google.com"))
   expect_error(parseMetaData(c("wat", "wat2")))
 })
+
+test_that("getDatasetMetaData returns same output for different objects", {
+  data_url <- './data/data-datasetpage2.html'
+  data_info <- structure(
+    list(
+      description = 'foo',
+      title = 'bar',
+      link = data_url
+    ),
+    class = "berlin_data_dataset_info"
+  )
+  data_list <- structure(
+    list(data_info,
+         data_info
+      ),
+    class = "berlin_data_list"
+    )
+  expect_equivalent(getDatasetMetaData(data_url), getDatasetMetaData(data_info))
+  expect_equivalent(getDatasetMetaData(data_info), getDatasetMetaData(data_list)[[1]])
+})
+
+test_that("getDatasetMetaData throws appropriate errors", {
+  data_url <- './data/data-datasetpage2.html'
+  expect_error(getDatasetMetaData())
+  expect_error(getDatasetMetaData(4))
+  expect_error(getDatasetMetaData('hi'))
+  expect_error(getDatasetMetaData(c(data_url, data_url)))
+})
