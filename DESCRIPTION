@@ -1,7 +1,7 @@
 Package: BerlinData
 Type: Package
 Title: Easy access to Berlin related data
-Version: 0.0.0
+Version: 1.0.0
 Date: 2014-03-14
 Author: Kate McCurdy, Dirk Schumacher
 Maintainer: Dirk Schumacher <mail@dirk-schumacher.net>
@@ -15,4 +15,5 @@ Imports:
     XML (>= 3.95),
     stringr
 Suggests:
-    testthat
+    testthat,
+    rjson

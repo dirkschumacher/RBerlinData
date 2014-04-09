@@ -26,23 +26,24 @@ getDatasetMetaData <- function(where) {
   UseMethod("getDatasetMetaData")
 }
 
-getDatasetMetaData.berlin_data_list = function(data_list) {
-  stopifnot(length(data_list) >= 1)
-  result <- lapply(data_list, getDatasetMetaData)
+#' @export
+getDatasetMetaData.berlin_data_list = function(where) {
+  result <- lapply(where, getDatasetMetaData)
   attr(result, "class") <- "berlin_data_list"
   result
 }
 
-getDatasetMetaData.berlin_data_dataset_info = function(dataset_info) {
-  stopifnot(length(dataset_info) == 1)
-  link <- dataset_info$link
+#' @export
+getDatasetMetaData.berlin_data_dataset_info = function(where) {
+  link <- where$link
   result <- parseMetaData(link)
   result
 }
 
-getDatasetMetaData.character = function(dataset_url) {
-  stopifnot(length(dataset_url) == 1)
-  result <- parseMetaData(dataset_url)
+#' @export
+getDatasetMetaData.character = function(where) {
+  stopifnot(length(where) == 1)
+  result <- parseMetaData(where)
   result
 }
 
@@ -50,8 +51,8 @@ getDatasetMetaData.character = function(dataset_url) {
 #' @param dataset_url the url of the dataset
 #' @export
 parseMetaData <- function(dataset_url) {
-  stopifnot(length(dataset_url) == 1)
   stopifnot(is.character(dataset_url))
+  stopifnot(length(dataset_url) == 1)
   parsed_data <- htmlParse(dataset_url)
   title_nodeset <- xpathApply(parsed_data,  "//h1[@id='page-title']")
   title <- str_trim(xmlValue(title_nodeset[[1]]))

@@ -10,30 +10,30 @@ checkDataSet <- function(data, expected_title, expected_number_resources) {
                                         "berlin_data_resource"))
 }
 
-test_that("searchBerlinData query basic", {
-  data <- searchBerlinData(query = "stolpersteine")
+test_that("searchBerlinDatasets query basic", {
+  data <- searchBerlinDatasets(query = "stolpersteine")
   expect_true(length(data) >= 1)
   expect_true(length(data) < 5)
   expect_equivalent(class(data), "berlin_data_list")
 })
 
-test_that("searchBerlinData error handling params", {
-  expect_error(searchBerlinData())
-  expect_error(searchBerlinData(query = c("1", "2")))
+test_that("searchBerlinDatasets error handling params", {
+  expect_error(searchBerlinDatasets())
+  expect_error(searchBerlinDatasets(query = c("1", "2")))
 })
 
 test_that("search_data correctly finds items", {
-  data <- search_data("wochen", xml_url = "./data/test-rss-feed.xml")
+  data <- search_data("wochen", xml.url = "./data/test-rss-feed.xml")
   expect_equivalent(length(data), 1)
-  data <- search_data("watwatwat", xml_url = "./data/test-rss-feed.xml")
+  data <- search_data("watwatwat", xml.url = "./data/test-rss-feed.xml")
   expect_equivalent(length(data), 1)
   expect_equivalent(class(data), "berlin_data_query_no_results")
-  data <- search_data("Antikmarkt", xml_url = "./data/test-rss-feed.xml")
+  data <- search_data("Antikmarkt", xml.url = "./data/test-rss-feed.xml")
   expect_equivalent(length(data), 1)
 })
 
 test_that("search_data extracts the correct information", {
-  data <- search_data("wochen", xml_url = "./data/test-rss-feed.xml")[[1]]
+  data <- search_data("wochen", xml.url = "./data/test-rss-feed.xml")[[1]]
   expect_equivalent(data$link, "http://daten.berlin.de/datensaetze/berliner-wochen-und-tr%C3%B6delm%C3%A4rkte-2013")
   expect_equivalent(data$title, "Berliner Wochen- und Troedelmaerkte 2013")
   expect_equivalent(data$description, "Wochenmarkt, Troedelmarkt, Flohmarkt, Antikmarkt")
