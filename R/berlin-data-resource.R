@@ -21,8 +21,8 @@ download.berlin_data_resource <- function(resource) {
 downloadFormat <- function(url, format, ...) {
   switch(format,
          CSV = read.csv(url, ...),
-         JSON = downloadJson(url, ...),
-         XML = downloadXml(url, ...))
+         JSON = downloadJSON(url, ...),
+         XML = downloadXML(url, ...))
 }
 
 #' Downloads json file
