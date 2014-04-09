@@ -1,6 +1,15 @@
 #' @import XML stringr
 NULL
 
+#' Cached version of the RSS feed
+#' 
+#' @docType data
+#' @keywords Stolpersteine, Gedenken, Geschichte, Nationalsozialismus,
+#' Judenverfolgung
+#' @name feed
+#' @format An XML document
+NULL
+
 #' Queries daten.berlin.de
 #' 
 #' Only one of the parameters can have a value.
