@@ -1,18 +1,23 @@
 #' @export
 summary.berlin_data_resource <- function(object, ...) {
-  object
+  cat(paste0(i," - Title: '", object$title,"';Format: ", object$format))
+}
+
+#' @export
+summary.berlin_data_resource_list <- function(object, ...) {
+  cat(paste(length(object), "resources"))
+  cat("\n")
+  for (i in 1:length(object)) {
+    cat(summary(object[[1]]))
+    cat("\n")
+  }
 }
 
 #' @export
 summary.berlin_data_dataset <- function(object, ...) {
   cat(object$title)
   cat("\n")
-  cat(paste(length(object$resources), "resources"))
-  cat("\n")
-  for (i in 1:length(object$resources)) {
-    cat(paste0(i," - Title: '", object$resources[[i]]$title,"';Format: ", object$resources[[i]]$format))
-    cat("\n")
-  }
+  cat(summary(object$resources))
 }
 
 #' Downloads a resource
