@@ -99,11 +99,10 @@ test_that("getDatasetMetaData throws appropriate errors", {
 })
 
 test_that("cached daten.berlin.de RSS feed is parseable, has correct content", {
-  data_url <- '../../data/cached_datasets_feed.rda'
-  load(data_url)
-  expect_equivalent(class(datasets_feed_tree), "character")
-  expect_equivalent(class(attr(datasets_feed_tree, 'last_updated')), "character")
-  datasets_feed <- xmlParse(datasets_feed_tree)
+  data(cached_datasets_feed)
+  expect_equivalent(class(cached_datasets_feed), "character")
+  expect_equivalent(class(attr(cached_datasets_feed, 'last_updated')), "character")
+  datasets_feed <- xmlParse(cached_datasets_feed)
   expect_equivalent(class(datasets_feed), c("XMLInternalDocument", "XMLAbstractDocument"))
   items = getNodeSet(datasets_feed, "//item")
   expect_true(length(items) > 1)
