@@ -24,12 +24,12 @@ NULL
 #' 
 searchBerlinDatasets <- function(query) {
   stopifnot(length(query) == 1 && is.character(query))
-  result <- search_data(query) 
+  result <- searchData(query) 
   result
 }
 
 #' Gets metadata for a dataset or list of datasets
-#' @param where where to look for metadata: can be a URL, \code{berlin_data_dataset_info}, of \code{berlin_data_list}
+#' @param where where to look for metadata: can be a URL, \code{berlin_data_dataset_info}, or \code{berlin_data_list}
 #' @export
 getDatasetMetaData <- function(where) {
   UseMethod("getDatasetMetaData")
@@ -122,20 +122,21 @@ parseMetaData <- function(dataset_url) {
 # param query the query string
 # param xml_url the url to the rss feed
 # usage Internal
-search_data <- function(query, 
-                     xml.url = "http://daten.berlin.de/datensaetze/rss.xml") {
-  feed = tryCatch(xmlParse(xml.url),
-                  error=function(e) {
-                    if (xml.url=="http://daten.berlin.de/datensaetze/rss.xml") {
-                      message('Could not establish connection to daten.berlin.de')
-                      load('data/berlin-datasets.rda')
-                      message('Using stored list of Berlin datasets')
-                      message(paste0('Last updated: ', attr(feed, 'last_updated')))
-                    } else {
-                      stop(e)
-                    }
-                  })
-  items = getNodeSet(feed, "//item")
+searchData <- function(query, 
+                       xml.url = "http://daten.berlin.de/datensaetze/rss.xml") {
+  datasets_feed <- tryCatch(xmlParse(xml.url),
+                           error=function(e) {
+                             if (xml.url=="http://daten.berlin.de/datensaetze/rss.xml") {
+                               message('Could not establish connection to daten.berlin.de')
+                               load('data/cached_datasets_feed.rda')
+                               message('Using stored list of Berlin datasets')
+                               message(paste0('Last updated: ', attr(datasets_feed_tree, 'last_updated')))
+                               datasets_feed = xmlParse(datasets_feed_tree)
+                             } else {
+                               stop(e)
+                             }
+                           })
+  items = getNodeSet(datasets_feed, "//item")
   cleaned_items <- lapply(items, function(item) {
     structure(
       list(
@@ -160,3 +161,24 @@ search_data <- function(query,
     structure(list(query = query), class = "berlin_data_query_no_results")
   }
 }
+
+#' Updates cached datasets_feed, in data/cached_datasets_feed.rda, from daten.berlin.de
+#' 
+#' @export
+updateCachedFeed <- function(feed.url="http://daten.berlin.de/datensaetze/rss.xml") {
+  datasets_feed <- xmlParse(feed.url)
+  datasets_feed_tree <- saveXML(datasets_feed)
+  attr(datasets_feed_tree, 'last_updated') <- date()
+  save(datasets_feed_tree, file='data/cached_datasets_feed.rda')
+  message(paste0('Updated data/cached_datasets_feed.rda. Last version: ', attr(datasets_feed_tree, 'last_updated')))
+}
+
+#' Cached version of daten.berlin.de dataset feed.
+#' Stored as XML tree in text form
+#' 
+#' @docType data
+#' @keywords datasets
+#' @source \url{http://daten.berlin.de/datensaetze/rss.xml}
+#' @format XML tree with timestamp attribute 'last_updated'
+#' @name datasets_feed_tree
+NULL

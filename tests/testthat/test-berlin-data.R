@@ -22,18 +22,18 @@ test_that("searchBerlinDatasets error handling params", {
   expect_error(searchBerlinDatasets(query = c("1", "2")))
 })
 
-test_that("search_data correctly finds items", {
-  data <- search_data("wochen", xml.url = "./data/test-rss-feed.xml")
+test_that("searchData correctly finds items", {
+  data <- searchData("wochen", xml.url = "./data/test-rss-feed.xml")
   expect_equivalent(length(data), 1)
-  data <- search_data("watwatwat", xml.url = "./data/test-rss-feed.xml")
+  data <- searchData("watwatwat", xml.url = "./data/test-rss-feed.xml")
   expect_equivalent(length(data), 1)
   expect_equivalent(class(data), "berlin_data_query_no_results")
-  data <- search_data("Antikmarkt", xml.url = "./data/test-rss-feed.xml")
+  data <- searchData("Antikmarkt", xml.url = "./data/test-rss-feed.xml")
   expect_equivalent(length(data), 1)
 })
 
-test_that("search_data extracts the correct information", {
-  data <- search_data("wochen", xml.url = "./data/test-rss-feed.xml")[[1]]
+test_that("searchData extracts the correct information", {
+  data <- searchData("wochen", xml.url = "./data/test-rss-feed.xml")[[1]]
   expect_equivalent(data$link, "http://daten.berlin.de/datensaetze/berliner-wochen-und-tr%C3%B6delm%C3%A4rkte-2013")
   expect_equivalent(data$title, "Berliner Wochen- und Troedelmaerkte 2013")
   expect_equivalent(data$description, "Wochenmarkt, Troedelmarkt, Flohmarkt, Antikmarkt")
@@ -96,4 +96,15 @@ test_that("getDatasetMetaData throws appropriate errors", {
   expect_error(getDatasetMetaData(4))
   expect_error(getDatasetMetaData('hi'))
   expect_error(getDatasetMetaData(c(data_url, data_url)))
+})
+
+test_that("cached daten.berlin.de RSS feed is parseable, has correct content", {
+  data_url <- '../../data/cached_datasets_feed.rda'
+  load(data_url)
+  expect_equivalent(class(datasets_feed_tree), "character")
+  expect_equivalent(class(attr(datasets_feed_tree, 'last_updated')), "character")
+  datasets_feed <- xmlParse(datasets_feed_tree)
+  expect_equivalent(class(datasets_feed), c("XMLInternalDocument", "XMLAbstractDocument"))
+  items = getNodeSet(datasets_feed, "//item")
+  expect_true(length(items) > 1)
 })
