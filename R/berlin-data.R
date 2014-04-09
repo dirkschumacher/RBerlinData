@@ -10,7 +10,6 @@ NULL
 
 #' Queries daten.berlin.de
 #' 
-#' Only one of the parameters can have a value.
 #' 
 #' @param query a query string to search daten.berlin.de
 #' @export

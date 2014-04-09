@@ -1,6 +1,6 @@
 #' @export
 summary.berlin_data_resource <- function(object, ...) {
-  cat(paste0(i," - Title: '", object$title,"';Format: ", object$format))
+  cat(paste0("Title: '", object$title,"';Format: ", object$format))
 }
 
 #' @export
