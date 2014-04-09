@@ -9,7 +9,7 @@ searchBerlinDatasets(query)
 \item{query}{a query string to search daten.berlin.de}
 }
 \description{
-Only one of the parameters can have a value.
+Queries daten.berlin.de
 }
 \examples{
 result <- searchBerlinDatasets(query = "stolpersteine")

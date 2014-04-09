@@ -6,7 +6,7 @@
 getDatasetMetaData(where)
 }
 \arguments{
-\item{where}{where to look for metadata: can be a URL, \code{berlin_data_dataset_info}, of \code{berlin_data_list}}
+\item{where}{where to look for metadata: can be a URL, \code{berlin_data_dataset_info}, or \code{berlin_data_list}}
 }
 \description{
 Gets metadata for a dataset or list of datasets
