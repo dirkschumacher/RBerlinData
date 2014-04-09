@@ -3,6 +3,18 @@ summary.berlin_data_resource <- function(object, ...) {
   object
 }
 
+#' @export
+summary.berlin_data_dataset <- function(object, ...) {
+  cat(object$title)
+  cat("\n")
+  cat(paste(length(object$resources), "resources"))
+  cat("\n")
+  for (i in 1:length(object$resources)) {
+    cat(paste0(i," - Format: ", object$resources[[i]]$format))
+    cat("\n")
+  }
+}
+
 #' Downloads a resource
 #' @export
 #' @method download berlin_data_resource

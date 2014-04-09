@@ -57,6 +57,7 @@ test_that("parseMetaData parses correctly the information 2", {
   expect_equivalent("berlin_data_resource_list", class(resources(data)))
   checkDataSet(data, expected_title = "Angebote der schulbezogenen Jugendarbeit und Jugendsozialarbeit",
                expected_number_resources = 9)
+  expect_equivalent(data$resources[[1]]$title, "wat  doc: http://support.berlin.de/wiki/index.php/SimpleSearch_API wat")
   expect_equivalent(data$resources[[1]]$hash, "1cec5a90-cc82-4351-9298-2ae90e2d86eb")
   expect_equivalent(data$resources[[1]]$format, "HTML")
   expect_equivalent(data$resources[[1]]$language, "Deutsch")
