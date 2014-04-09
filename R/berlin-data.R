@@ -1,6 +1,13 @@
 #' @import XML stringr
 NULL
 
+#' Cached version of the RSS feed
+#' 
+#' @docType data
+#' @name feed
+#' @format An XML document
+NULL
+
 #' Queries daten.berlin.de
 #' 
 #' Only one of the parameters can have a value.
@@ -9,8 +16,11 @@ NULL
 #' @export
 #' @examples
 #' result <- searchBerlinDatasets(query = "stolpersteine")
+#' summary(result)
 #' dataset <- getDatasetMetaData(result[[2]])
+#' summary(dataset)
 #' resource_list <- resources(dataset)
+#' summary(resource_list)
 #' data <- download(resource_list[[1]])
 #' 
 searchBerlinDatasets <- function(query) {
@@ -57,8 +67,23 @@ parseMetaData <- function(dataset_url) {
   title_nodeset <- xpathApply(parsed_data,  "//h1[@id='page-title']")
   title <- str_trim(xmlValue(title_nodeset[[1]]))
   resources_nodeset <- getNodeSet(parsed_data, "//div[@class='dataset_ressource']")
+  stripTags <- function(htmlString) {
+    text <- gsub("<.*>", "", htmlString)
+    text <- gsub("<.*>", "", htmlString)
+    text <- gsub("\\n", "", text)
+    str_trim(text)
+  }
   resources_list <- lapply(resources_nodeset, function(res) {
     sub_doc <- xmlDoc(res)
+    title_doc <- getNodeSet(sub_doc, "//div[@class='resource_notes']/div")
+    if (length(title_doc) == 1) {
+      title <- stripTags(xmlValue(title_doc[[1]]))
+    } else {
+      title <- "<could not parse title>"
+    }
+    if (nchar(title) == 0) {
+      title <- "<no title>"
+    }
     field_labels <- getNodeSet(sub_doc, "//div[@class='field-label']")
     field_items <- getNodeSet(sub_doc, "//div[@class='field-items']")
     cleaned_field_labels <- unlist(lapply(field_labels, function(l)str_trim(xmlValue(l))))
@@ -75,6 +100,7 @@ parseMetaData <- function(dataset_url) {
       res_url <- unlist(xpathApply(xmlDoc(field_items[[url_index]]),  
                                    "//a[@href]", xmlGetAttr, "href"))
       structure(list(
+        title = title,
         url = res_url,
         hash = cleaned_field_items[[hash_index]],
         format = cleaned_field_items[[data_format_index]],
