@@ -8,7 +8,8 @@ summary.berlin_data_resource_list <- function(object, ...) {
   cat(paste(length(object), "resources"))
   cat("\n")
   for (i in 1:length(object)) {
-    cat(paste0(i,": ", summary(object[[i]])))
+    cat(paste0(i,": "))
+    cat(summary(object[[i]]))
     cat("\n")
   }
 }
