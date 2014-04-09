@@ -7,9 +7,4 @@
 \description{
 Cached version of the RSS feed
 }
-\keyword{Gedenken,}
-\keyword{Geschichte,}
-\keyword{Judenverfolgung}
-\keyword{Nationalsozialismus,}
-\keyword{Stolpersteine,}
 

@@ -10,7 +10,7 @@ summary.berlin_data_dataset <- function(object, ...) {
   cat(paste(length(object$resources), "resources"))
   cat("\n")
   for (i in 1:length(object$resources)) {
-    cat(paste0(i," - Format: ", object$resources[[i]]$format))
+    cat(paste0(i," - Title: '", object$resources[[i]]$title,"';Format: ", object$resources[[i]]$format))
     cat("\n")
   }
 }

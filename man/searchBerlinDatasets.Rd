@@ -13,8 +13,11 @@ Only one of the parameters can have a value.
 }
 \examples{
 result <- searchBerlinDatasets(query = "stolpersteine")
+summary(result)
 dataset <- getDatasetMetaData(result[[2]])
+summary(dataset)
 resource_list <- resources(dataset)
+summary(resource_list)
 data <- download(resource_list[[1]])
 }
 

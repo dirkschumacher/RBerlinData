@@ -81,6 +81,9 @@ parseMetaData <- function(dataset_url) {
     } else {
       title <- "<could not parse title>"
     }
+    if (nchar(title) == 0) {
+      title <- "<no title>"
+    }
     field_labels <- getNodeSet(sub_doc, "//div[@class='field-label']")
     field_items <- getNodeSet(sub_doc, "//div[@class='field-items']")
     cleaned_field_labels <- unlist(lapply(field_labels, function(l)str_trim(xmlValue(l))))
