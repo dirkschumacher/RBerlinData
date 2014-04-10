@@ -139,7 +139,7 @@ searchData <- function(query,
                                stop(e)
                              }
                            })
-  items = getNodeSet(datasets_feed, "//item")
+  items <- getNodeSet(datasets_feed, "//item")
   cleaned_items <- lapply(items, function(item) {
     structure(
       list(

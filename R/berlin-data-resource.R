@@ -26,8 +26,6 @@ summary.berlin_data_dataset <- function(object, ...) {
 #' @method download berlin_data_resource
 #' @param resource a resource of type berlin_data_resource
 download.berlin_data_resource <- function(resource) {
-  stopifnot('format' %in% names(resource), 
-            'url' %in% names(resource))
   result <- downloadFormat(resource$url, resource$format)
   result
 }
@@ -51,7 +49,11 @@ downloadJSON <- function(json.url, parse.to.df=TRUE, ...) {
   require(rjson)
   result <- fromJSON(file=json.url, ...)
   if(parse.to.df) {
-    data <- result[[3]]
+    stopifnot(length(result) == 4 &
+                names(result) == c("messages", "results", "index", "item") &
+                class(result$index) == "list" & 
+                length(result$index) >= 1)
+    data <- result$index
     data <- lapply(data, unlist)
     data <- do.call(rbind, data)
     result <- data.frame(data) 
@@ -64,22 +66,28 @@ downloadJSON <- function(json.url, parse.to.df=TRUE, ...) {
 #' @param parse.to.df logical: should the function try to parse the XML output into a data.frame?
 #' @param ... optional additional arguments to download function
 downloadXML = function(xml.url, parse.to.df=TRUE, ...) {
-  result <- xmlTreeParse(xml.url, ...)
+  result <- xmlTreeParse(file=xml.url, getDTD=FALSE, ...)
+  stopifnot(length(result) == 3 &
+              names(result) == c("file", "version", "children"))
+  result <- xmlRoot(result)
   if (parse.to.df) {
-    data <- result[[1]][[1]][[3]]
-    # TODO this doesn't work
-    data1 <- lapply(data, 
+    stopifnot("XMLNode" %in% class(result) &
+                names(result) == c("messages", "results", "index", "item") & 
+                length(result[['index']]) >= 1)
+    items <- getNodeSet(result[['index']], "//item")
+    ncols <- max(sapply(items, xmlSize))
+    data <- lapply(items, 
                    function(item) {
                      datarow <- sapply(xmlChildren(item), xmlValue)
-                     if(class(datarow)=="list") datarow <- unlist(datarow)
-                     print(names(datarow)) 
-                     print(names(item))
-                     print(class(datarow))
+                     stopifnot(length(datarow) == ncols)
+                     if(class(datarow)=="list") { #  handle missing values
+                       datarow[sapply(datarow, length)==0] = ''
+                       datarow <- unlist(datarow)
+                     }
                      datarow
                    })
     data <- do.call(rbind, data)
-    dimnames()
-    result1 <- data.frame(data)
+    result <- data.frame(data)
   }
   result
 }
