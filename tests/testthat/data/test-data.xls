@@ -1,0 +1,32 @@
+<html>
+<head>
+  <title>Kindertagesst&#228;tten in Marzahn-Hellersdorf - Berlin.de</title>
+  <style>/*<![CDATA[*/
+  td, th {text-align:left;border:0.1pt solid #ddd;}
+  /*]]>*/</style>
+</head>
+<body>
+  <table class="seninn result"><thead><tr><th class="text">Einrichtung</th>
+<th class="text">Stra&#223;e</th>
+<th class="text" rowspan="2">Bild der Einrichtung</th>
+</tr>
+</thead>
+<tbody><tr class="odd line_0"><td class="text">Kita &quot;Haus Lach und Krach&quot;</td>
+<td class="text">Suhler Stra&#223;e 43/ 45</td>
+<td class="text" rowspan="2">118.jpg</td>
+</tr>
+<tr class="even line_0"><td class="text">Kita &quot;Traumzauberhaus&quot;</td>
+<td class="text">Teupitzer Stra&#223;e 10/ 12</td>
+<td class="text" rowspan="2">0.jpg</td>
+</tr>
+<tr class="odd line_0"><td class="text">Kita &quot;Micky Maus&quot;</td>
+<td class="text">Wei&#223;enfelser Stra&#223;e 31/ 33</td>
+<td class="text" rowspan="2">131.jpg</td>
+</tr>
+<tr class="even line_0"><td class="text">Kita &quot;Kastanienknirpse&quot;</td>
+<td class="text">Kastanienallee 53</td>
+<td class="text" rowspan="2">177.jpg</td>
+</tr>
+</tbody>
+</table></body>
+</html>

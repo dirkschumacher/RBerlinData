@@ -22,32 +22,57 @@ summary.berlin_data_dataset <- function(object, ...) {
 }
 
 #' Downloads a resource
+#' @param resource a resource which can be downloaded 
+#' @param ... optional additional arguments to download function
 #' @export
-#' @method download berlin_data_resource
+download <- function(resource, ...) {
+  UseMethod("download")
+}
+
+
+#' Default fallback method for download
+#' Indicates unsupported file format
+#' @param resource a resource which can be downloaded
+#' @param ... optional additional arguments
+#' @export
+download.default <- function(resource, ...) {
+  stopifnot(length(resource) >= 1)
+  message('Attempted to download:')
+  message(resource)
+  message('File format:')
+  message(class(resource))
+  message('Unfortunately, BerlinData does not yet support automatic download for this format.')
+}
+
+#' Downloads a resource
 #' @param resource a resource of type berlin_data_resource
-download.berlin_data_resource <- function(resource) {
-  result <- downloadFormat(resource$url, resource$format)
+#' @param ... optional additional arguments to download function
+#' @export
+download.berlin_data_resource <- function(resource, ...) {
+  resource_link <- resource$url
+  class(resource_link) <- resource$format
+  result <- download(resource_link, ...)
   result
 }
 
-#' Calls appropriate function for download format
-#' @param url url of file location
-#' @param format string specifying download format, in c("CSV", "JSON", "XML")
+#' Downloads CSV
+#' @param resource url of csv file location
+#' @param sep field separator
 #' @param ... optional additional arguments to download function
-downloadFormat <- function(url, format, ...) {
-  switch(format,
-         CSV = read.csv(url, ...),
-         JSON = downloadJSON(url, ...),
-         XML = downloadXML(url, ...))
+#' @export
+download.CSV <- function(resource, ..., sep=';') {
+  result <- read.csv(resource, sep=sep, ...)
+  result
 }
 
 #' Downloads json file
-#' @param json.url url of json file location
+#' @param resource url of json file location
 #' @param parse.to.df logical: should the function try to parse the JSON output into a data.frame?
 #' @param ... optional additional arguments to download function
-downloadJSON <- function(json.url, parse.to.df=TRUE, ...) {
+#' @export
+download.JSON <- function(resource, ..., parse.to.df=TRUE) {
   require(rjson)
-  result <- fromJSON(file=json.url, ...)
+  result <- fromJSON(file=resource, ...)
   if(parse.to.df) {
     stopifnot(length(result) == 4 &
                 names(result) == c("messages", "results", "index", "item") &
@@ -62,11 +87,12 @@ downloadJSON <- function(json.url, parse.to.df=TRUE, ...) {
 }
 
 #' Downloads xml file
-#' @param xml.url url of xml file location
+#' @param resource url of xml file location
 #' @param parse.to.df logical: should the function try to parse the XML output into a data.frame?
 #' @param ... optional additional arguments to download function
-downloadXML = function(xml.url, parse.to.df=TRUE, ...) {
-  result <- xmlTreeParse(file=xml.url, getDTD=FALSE, ...)
+#' @export
+download.XML = function(resource, ..., parse.to.df=TRUE) {
+  result <- xmlTreeParse(file=resource, getDTD=FALSE, ...)
   stopifnot(length(result) == 3 &
               names(result) == c("file", "version", "children"))
   result <- xmlRoot(result)
@@ -92,9 +118,26 @@ downloadXML = function(xml.url, parse.to.df=TRUE, ...) {
   result
 }
 
-#' Downloads a resource
-#' @param resource a resource which can be downloaded 
+#' Downloads xls file
+#' Interestingly, these appear to actually be HTML files.
+#' @param resource url of xls file location
+#' @param parse.to.df logical: should the function try to parse the html output into a data.frame?
+#' @param ... optional additional arguments to download function
 #' @export
-download <- function(resource) {
-  UseMethod("download")
+download.XLS <- function(resource, ..., parse.to.df=TRUE) {
+  result_con <- url(resource, open="r", ...)
+  result <- readLines(result_con, warn=FALSE) # all these files lack final EOLS: turn off warning
+  close(result_con)
+  result <- paste(result, collapse=' ')
+  if (length(result) == 0 | substr(result,1,6) != '<html>') 
+    stop(paste("XLS autodownload unsuccessful: you can attempt manual download from", resource))
+  result <- htmlParse(result)
+  if(parse.to.df) {
+    stopifnot(length(result) &
+                "HTMLInternalDocument" %in% class(result))
+    data <- readHTMLTable(result)
+    stopifnot(length(data) == 1 & class(data[[1]]) == "data.frame")
+    result <- data[[1]]
+  }
+  result
 }

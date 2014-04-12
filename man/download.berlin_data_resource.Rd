@@ -3,10 +3,12 @@
 \alias{download.berlin_data_resource}
 \title{Downloads a resource}
 \usage{
-\method{download}{berlin_data_resource}(resource)
+\method{download}{berlin_data_resource}(resource, ...)
 }
 \arguments{
 \item{resource}{a resource of type berlin_data_resource}
+
+\item{...}{optional additional arguments to download function}
 }
 \description{
 Downloads a resource
