@@ -1,0 +1,5 @@
+"agency_id","agency_name","agency_url","agency_timezone"
+1,"S-Bahn Berlin GmbH","http://www.s-bahn-berlin.de","Europe/Berlin"
+32,"Oberhavel Verkehrsgesellschaft mbH","http://www.ovg-online.de","Europe/Berlin"
+47,"Verkehrsbetriebe Brandenburg an der Havel GmbH","http://www.vbbr.de","Europe/Berlin"
+84,"Stadtverkehrsgesellschaft mbH Frankfurt (Oder)","http://www.svf-ffo.de","Europe/Berlin"

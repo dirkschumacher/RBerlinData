@@ -75,12 +75,12 @@ test_that("parseMetaData fails with wrong parameter", {
 })
 
 test_that("getDatasetMetaData returns same output for different objects", {
-  data_url <- './data/data-datasetpage2.html'
+  dataset_url <- './data/data-datasetpage2.html'
   data_info <- structure(
     list(
       description = 'foo',
       title = 'bar',
-      link = data_url
+      link = dataset_url
     ),
     class = "berlin_data_dataset_info"
   )
@@ -90,8 +90,9 @@ test_that("getDatasetMetaData returns same output for different objects", {
       ),
     class = "berlin_data_list"
     )
-  expect_equivalent(getDatasetMetaData(data_url), getDatasetMetaData(data_info))
+  expect_equivalent(getDatasetMetaData(dataset_url), getDatasetMetaData(data_info))
   expect_equivalent(getDatasetMetaData(data_info), getDatasetMetaData(data_list)[[1]])
+  expect_equivalent(class(getDatasetMetaData(dataset_url)), "berlin_data_dataset")
 })
 
 test_that("getDatasetMetaData throws appropriate errors", {

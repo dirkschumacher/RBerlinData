@@ -11,7 +11,9 @@ getDatasetMetaData.berlin_data_list = function(where, ...) {
 download.berlin_data_list <- function(x, ...) {
   message(paste("Downloading all resources for", length(x), "datasets"))
   y <- lapply(x, function(y) download(y, ...))
-  y
+  successful.downloads <- Filter(function(r)!is.null(r), y)
+  message(paste("Downloaded", length(successful.downloads), "of", length(x), "datasets"))
+  successful.downloads
 }
 
 ## methods for base generic functions ##

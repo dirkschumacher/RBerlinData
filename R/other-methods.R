@@ -44,10 +44,11 @@ download.CSV <- function(x, message.on.fail=TRUE, ..., sep=';') {
                        if(message.on.fail) {
                          message(paste("Failed to download resource:", x))
                          message("  Please try manual download.")
-                         message(paste("  ", e, "\n")) 
+                         message(paste("  ", e, "\n"))
                        }
-                       return()
+                       e
                      })
+  if(inherits(result, "error")) return()
   result
 }
 
@@ -65,8 +66,9 @@ download.TXT <- function(x, message.on.fail=TRUE, ..., sep=',') {
                          message("  Please try manual download.")
                          message(paste("  ", e, "\n")) 
                        }
-                       return()
+                       e
                      })
+  if(inherits(result, "error")) return()
   result
 }
 
@@ -86,8 +88,9 @@ download.JSON <- function(x, message.on.fail=TRUE, ..., parse.to.df=TRUE) {
                          message("  Please try manual download.")
                          message(paste("  ", e, "\n")) 
                        }
-                       return()
+                       e
                      })
+  if(inherits(result, "error")) return()
   if(parse.to.df) {
     stopifnot(length(result) == 4 &
                 names(result) == c("messages", "results", "index", "item") &
@@ -112,11 +115,12 @@ download.XML = function(x, message.on.fail=TRUE, ..., parse.to.df=TRUE) {
                      error = function(e) {
                        if(message.on.fail) {
                          message(paste("Failed to download resource:", x))
-                         message("  Please try manual download.")
+                         message("  Please try manual download.") 
                          message(paste("  ", e, "\n")) 
                        }
-                       return()
+                       e
                      })
+  if(inherits(result, "error")) return()
   stopifnot(length(result) == 3 &
               names(result) == c("file", "version", "children"))
   result <- xmlRoot(result)

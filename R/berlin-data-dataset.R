@@ -20,6 +20,9 @@ download.berlin_data_dataset <- function(x, ...) {
   y
 }
 
+#' @export
+getDatasetMetaData.berlin_data_dataset <- function(where, ...) where
+
 ## methods for base generic functions ##
 
 #' @export

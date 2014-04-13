@@ -6,11 +6,32 @@
 getDatasetMetaData(where, ...)
 }
 \arguments{
-\item{where}{where to look for metadata: can be a URL, \code{berlin_data_dataset_info}, or \code{berlin_data_list}}
+\item{where}{where to look for metadata}
 
 \item{...}{optional additional arguments to methods}
 }
 \description{
 Gets metadata for a dataset or list of datasets
+}
+\examples{
+# query
+result <- searchBerlinDatasets(query = "vornamen")
+summary(result)
+
+# options to get metadata:
+# pass in URL
+metadata <- getDatasetMetaData(result[[2]]$link)
+# returns 'berlin_data_dataset' object with list of available resources
+class(metadata)
+
+# pass in object
+metadata <- getDatasetMetaData(result[[2]])
+# same result as passing in link
+
+# pass in berlin_data_list with query results to get metadata
+# for all objects in list
+metadata <- getDatasetMetaData(result)
+summary(metadata)
+summary(metadata[[1]])
 }
 
