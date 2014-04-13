@@ -4,12 +4,14 @@
 \title{Default fallback method for download
 Indicates unsupported file format}
 \usage{
-\method{download}{default}(resource, ...)
+\method{download}{default}(x, message.on.fail = TRUE, ...)
 }
 \arguments{
-\item{resource}{a resource which can be downloaded}
+\item{x}{a resource which can be downloaded}
 
 \item{...}{optional additional arguments}
+
+\item{message.on.fail}{logical: show message indicating failure to download?}
 }
 \description{
 Default fallback method for download

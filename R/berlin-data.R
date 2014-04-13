@@ -1,6 +1,8 @@
 #' @import XML stringr
 NULL
 
+## Data ###
+
 #' Cached version of daten.berlin.de dataset feed.
 #' Stored as XML tree in text form
 #' 
@@ -11,10 +13,73 @@ NULL
 #' @name cached_datasets_feed
 NULL
 
+## Generic functions ##
+
+#' Gets metadata for a dataset or list of datasets
+#' @param where where to look for metadata: can be a URL, \code{berlin_data_dataset_info}, or \code{berlin_data_list}
+#' @param ... optional additional arguments to methods
+#' @export
+getDatasetMetaData <- function(where, ...) {
+  UseMethod("getDatasetMetaData")
+}
+
+#' Downloads a resource
+#' @param x a resource, or object containing resources, which can be downloaded 
+#' @param ... optional additional arguments to methods, e.g.:
+#'   \itemize{
+#'     \item{message.on.fail}{logical: show message on download failure?}
+#'     \item{message.on.succeed}{logical: show message on download success?}
+#'   }
+#' @export
+#' @examples
+#' 
+#' # query, select a dataset, get its metadata
+#' result <- searchBerlinDatasets(query = "vornamen")
+#' summary(result)
+#' dataset <- getDatasetMetaData(result[[2]]) 
+#' summary(dataset)
+#' 
+#' # pick a resource to download
+#' resource <- resources(dataset)[[23]]
+#' data <- download(resource)
+#' # returns a data.frame
+#' class(data)
+#' 
+#' # or download multiple resources simultaneously
+#' data <- download(resources(dataset)[1:6])
+#' # returns a list of data.frames
+#' class(data)
+#' class(data[[1]])
+#' 
+#' # download all resources in dataset
+#' data <- download(dataset)
+#' 
+#' # turn off individual notifications for failed downloads 
+#' # due to unsupported file formats, URL schemes, etc.
+#' data <- download(dataset, message.on.fail=FALSE)
+#' 
+#' # turn off all individual notifications for downloads
+#' data <- download(dataset, message.on.fail=FALSE, message.on.succeed=FALSE)
+#' 
+download <- function(x, ...) {
+  UseMethod("download")
+}
+
+#' Gets the resources from an object
+#' @param object an object with resources
+#' @param ... optional additional arguments to methods
+#' @export
+resources <- function(object, ...) {
+  UseMethod("resources")
+}
+
+## Functions for main usage ##
+
 #' Queries daten.berlin.de
 #' 
 #' 
 #' @param query a query string to search daten.berlin.de
+#' @param ... optional additional arguments
 #' @export
 #' @examples
 #' result <- searchBerlinDatasets(query = "stolpersteine")
@@ -25,37 +90,9 @@ NULL
 #' summary(resource_list)
 #' data <- download(resource_list[[1]])
 #' 
-searchBerlinDatasets <- function(query) {
+searchBerlinDatasets <- function(query, ...) {
   stopifnot(length(query) == 1 && is.character(query))
-  result <- searchData(query) 
-  result
-}
-
-#' Gets metadata for a dataset or list of datasets
-#' @param where where to look for metadata: can be a URL, \code{berlin_data_dataset_info}, or \code{berlin_data_list}
-#' @export
-getDatasetMetaData <- function(where) {
-  UseMethod("getDatasetMetaData")
-}
-
-#' @export
-getDatasetMetaData.berlin_data_list = function(where) {
-  result <- lapply(where, getDatasetMetaData)
-  attr(result, "class") <- "berlin_data_list"
-  result
-}
-
-#' @export
-getDatasetMetaData.berlin_data_dataset_info = function(where) {
-  link <- where$link
-  result <- parseMetaData(link)
-  result
-}
-
-#' @export
-getDatasetMetaData.character = function(where) {
-  stopifnot(length(where) == 1)
-  result <- parseMetaData(where)
+  result <- searchData(query, ...) 
   result
 }
 

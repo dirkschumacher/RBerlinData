@@ -3,10 +3,12 @@
 \alias{getDatasetMetaData}
 \title{Gets metadata for a dataset or list of datasets}
 \usage{
-getDatasetMetaData(where)
+getDatasetMetaData(where, ...)
 }
 \arguments{
 \item{where}{where to look for metadata: can be a URL, \code{berlin_data_dataset_info}, or \code{berlin_data_list}}
+
+\item{...}{optional additional arguments to methods}
 }
 \description{
 Gets metadata for a dataset or list of datasets

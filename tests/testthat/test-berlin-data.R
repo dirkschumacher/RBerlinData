@@ -3,11 +3,14 @@ context("berlin_data")
 # helper functions
 checkDataSet <- function(data, expected_title, expected_number_resources) {
   expect_equivalent(class(data), "berlin_data_dataset")
+  expect_true(is.berlin_data_dataset(data))
   expect_equivalent(data$title, expected_title)
   expect_equivalent(length(data$resources), expected_number_resources)
   lapply(data$resources, 
          function(res)expect_equivalent(class(res), 
                                         "berlin_data_resource"))
+  lapply(data$resources, 
+         function(res)expect_true(is.berlin_data_resource(res)))
 }
 
 test_that("searchBerlinDatasets query basic", {
@@ -15,6 +18,7 @@ test_that("searchBerlinDatasets query basic", {
   expect_true(length(data) >= 1)
   expect_true(length(data) < 5)
   expect_equivalent(class(data), "berlin_data_list")
+  expect_true(is.berlin_data_list(data))
 })
 
 test_that("searchBerlinDatasets error handling params", {

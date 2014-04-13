@@ -3,10 +3,12 @@
 \alias{download.XML}
 \title{Downloads xml file}
 \usage{
-\method{download}{XML}(resource, ..., parse.to.df = TRUE)
+\method{download}{XML}(x, message.on.fail = TRUE, ..., parse.to.df = TRUE)
 }
 \arguments{
-\item{resource}{url of xml file location}
+\item{x}{url of xml file location}
+
+\item{message.on.fail}{logical: show message on download failure?}
 
 \item{parse.to.df}{logical: should the function try to parse the XML output into a data.frame?}
 

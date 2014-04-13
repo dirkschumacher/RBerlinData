@@ -3,10 +3,12 @@
 \alias{resources.berlin_data_dataset}
 \title{Gets the resources from a dataset}
 \usage{
-\method{resources}{berlin_data_dataset}(object)
+\method{resources}{berlin_data_dataset}(object, ...)
 }
 \arguments{
 \item{object}{a dataset with a list of resources}
+
+\item{...}{optional additional arguments}
 }
 \description{
 Gets the resources from a dataset

@@ -3,10 +3,12 @@
 \alias{download.JSON}
 \title{Downloads json file}
 \usage{
-\method{download}{JSON}(resource, ..., parse.to.df = TRUE)
+\method{download}{JSON}(x, message.on.fail = TRUE, ..., parse.to.df = TRUE)
 }
 \arguments{
-\item{resource}{url of json file location}
+\item{x}{url of json file location}
+
+\item{message.on.fail}{logical: show message on download failure?}
 
 \item{parse.to.df}{logical: should the function try to parse the JSON output into a data.frame?}
 

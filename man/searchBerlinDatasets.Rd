@@ -3,10 +3,12 @@
 \alias{searchBerlinDatasets}
 \title{Queries daten.berlin.de}
 \usage{
-searchBerlinDatasets(query)
+searchBerlinDatasets(query, ...)
 }
 \arguments{
 \item{query}{a query string to search daten.berlin.de}
+
+\item{...}{optional additional arguments}
 }
 \description{
 Queries daten.berlin.de

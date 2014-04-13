@@ -3,10 +3,12 @@
 \alias{resources}
 \title{Gets the resources from an object}
 \usage{
-resources(object)
+resources(object, ...)
 }
 \arguments{
 \item{object}{an object with resources}
+
+\item{...}{optional additional arguments to methods}
 }
 \description{
 Gets the resources from an object

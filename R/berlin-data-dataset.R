@@ -1,14 +1,47 @@
+## methods for BerlinData generic functions ##
+
 #' Gets the resources from a dataset
 #' @export 
 #' @method resources berlin_data_dataset
 #' @param object a dataset with a list of resources
-resources.berlin_data_dataset <- function(object) {
+#' @param ... optional additional arguments
+resources.berlin_data_dataset <- function(object, ...) {
   object$resources
 }
 
-#' Gets the resources from an object
-#' @param object an object with resources
 #' @export
-resources <- function(object) {
-  UseMethod("resources")
+download.berlin_data_dataset <- function(x, ...) {
+  message(paste("Downloading all resources for dataset: ", x$title))
+  if (length(x$resources) == 0) {
+    message(paste("  No resources located"))
+    return()
+  }
+  y <- download(x$resources, ...)
+  y
 }
+
+## methods for base generic functions ##
+
+#' @export
+as.data.frame.berlin_data_dataset <- function(x, ...) {
+  if (length(x$resources) == 0) {
+    message(paste("No resources located for dataset: ", x$title))
+    return()
+  }
+  y <- lapply(x$resources, as.data.frame)
+  y <- do.call(rbind, y)
+  y$title <- x$title
+  y
+}
+
+#' @export
+summary.berlin_data_dataset <- function(object, ...) {
+  cat(object$title)
+  cat("\n")
+  cat(summary(object$resources))
+}
+
+# roxygen2 doesn't recognize 'is.x' as an S3 method, requires manual documentation
+#' @method berlin_data_dataset is
+is.berlin_data_dataset <- function(x) inherits(x, "berlin_data_dataset")
+

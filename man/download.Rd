@@ -3,14 +3,47 @@
 \alias{download}
 \title{Downloads a resource}
 \usage{
-download(resource, ...)
+download(x, ...)
 }
 \arguments{
-\item{resource}{a resource which can be downloaded}
+\item{x}{a resource, or object containing resources, which can be downloaded}
 
-\item{...}{optional additional arguments to download function}
+\item{...}{optional additional arguments to methods, e.g.:
+\itemize{
+  \item{message.on.fail}{logical: show message on download failure?}
+  \item{message.on.succeed}{logical: show message on download success?}
+}}
 }
 \description{
 Downloads a resource
+}
+\examples{
+# query, select a dataset, get its metadata
+result <- searchBerlinDatasets(query = "vornamen")
+summary(result)
+dataset <- getDatasetMetaData(result[[2]])
+summary(dataset)
+
+# pick a resource to download
+resource <- resources(dataset)[[23]]
+data <- download(resource)
+# returns a data.frame
+class(data)
+
+# or download multiple resources simultaneously
+data <- download(resources(dataset)[1:6])
+# returns a list of data.frames
+class(data)
+class(data[[1]])
+
+# download all resources in dataset
+data <- download(dataset)
+
+# turn off individual notifications for failed downloads
+# due to unsupported file formats, URL schemes, etc.
+data <- download(dataset, message.on.fail=FALSE)
+
+# turn off all individual notifications for downloads
+data <- download(dataset, message.on.fail=FALSE, message.on.succeed=FALSE)
 }
 

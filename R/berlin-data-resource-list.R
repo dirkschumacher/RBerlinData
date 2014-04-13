@@ -1,0 +1,48 @@
+## methods for BerlinData generic functions ##
+
+#' @export
+download.berlin_data_resource_list <- function(x, ...) {
+  message(paste0("Downloading ", length(x), " resource", ifelse(length(x)>1, "s", "")))
+  y <- lapply(x, function(resource) tryCatch(download(resource, ...),
+                                             error = function(e) {
+                                               message(paste('Could not download resource:', resource$title))
+                                               message(paste('  ',e,'\n'))
+                                               return()
+                                             }))
+  successful.downloads <- Filter(function(r)!is.null(r), y)
+  message(paste("Downloaded", length(successful.downloads), "of", length(x), "resources."))
+  y
+}
+
+## methods for base generic functions ##
+
+#' @export
+summary.berlin_data_resource_list <- function(object, ...) {
+  cat(paste(length(object), "resources"))
+  cat("\n")
+  for (i in 1:length(object)) {
+    cat(paste0(i,": "))
+    cat(summary(object[[i]]))
+    cat("\n")
+  }
+}
+
+#' @export
+as.data.frame.berlin_data_resource_list <- function(x, ...) {
+  y <- lapply(x, as.data.frame)
+  y <- do.call(rbind, y)
+  y
+}
+
+# roxygen2 doesn't recognize 'is.x' as an S3 method, requires manual documentation
+#' @method berlin_data_resource_list is
+is.berlin_data_resource_list <- function(x) inherits(x, "berlin_resource_data_list")
+
+
+# subsets inherit class 
+#' @export
+`[.berlin_data_resource_list` <- function(x, ...) {
+  x <- NextMethod("[")
+  class(x) = "berlin_data_resource_list"
+  x
+}

@@ -3,10 +3,15 @@
 \alias{download.berlin_data_resource}
 \title{Downloads a resource}
 \usage{
-\method{download}{berlin_data_resource}(resource, ...)
+\method{download}{berlin_data_resource}(x, message.on.fail = TRUE,
+  message.on.succeed = TRUE, ...)
 }
 \arguments{
-\item{resource}{a resource of type berlin_data_resource}
+\item{x}{a resource of type berlin_data_resource}
+
+\item{message.on.fail}{logical: show message on download failure?}
+
+\item{message.on.succeed}{logical: show message on sucessful download?}
 
 \item{...}{optional additional arguments to download function}
 }

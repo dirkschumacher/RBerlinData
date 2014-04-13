@@ -3,10 +3,12 @@
 \alias{download.CSV}
 \title{Downloads CSV}
 \usage{
-\method{download}{CSV}(resource, ..., sep = ";")
+\method{download}{CSV}(x, message.on.fail = TRUE, ..., sep = ";")
 }
 \arguments{
-\item{resource}{url of csv file location}
+\item{x}{url of csv file location}
+
+\item{message.on.fail}{logical: show message on download failure?}
 
 \item{sep}{field separator}
 
