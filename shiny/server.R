@@ -7,7 +7,8 @@ shinyServer(function(input, output) {
 
   queryData = reactive(searchBerlinDatasets(input$query))
   queryDF = reactive(as.data.frame(queryData()))
-  message(str(isolate(queryDF())))
+  
+  #whichdataset = reactive(queryData()[[input$whichdataset]])
   
   output$info = reactive(
     if(inherits(queryData(), "berlin_data_query_no_results")) {
@@ -17,10 +18,10 @@ shinyServer(function(input, output) {
     }
     )
 
-  output$datasettable = renderDataTable({
+  output$datasettable = renderTable({
     queryDF() 
   })
   
-  #output$resourcetable = data.frame()
+  #output$resourcetable = renderTable({data.frame()})
   
 })

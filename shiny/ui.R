@@ -5,7 +5,7 @@ shinyUI(fluidPage(
   sidebarLayout(
     sidebarPanel(
       textInput(inputId="query", label="Your Query Here:", value="Vornamen"),
-      submitButton("Submit Query")#,
+      submitButton("Submit Query") #,
       #conditionalPanel(
       #  condition = "nrow(output.datasettable) > 0",
       #  textInput("whichdataset", "Select Dataset #"),
