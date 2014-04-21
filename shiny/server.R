@@ -1,8 +1,11 @@
 library(shiny)
 library(BerlinData)
+library(ggplot2)
 
 shinyServer(function(input, output) {
 
+  #### Data Explorer ####
+  
   queryData = reactive(searchBerlinDatasets(input$query))
   queryDF = reactive(as.data.frame(queryData()))
   
@@ -39,7 +42,7 @@ shinyServer(function(input, output) {
                  "Proceed to the Dataset tab to get metadata for any dataset."))
   )
 
-  output$query_table = renderTable({ queryDF() })
+  output$query_table = renderDataTable({ queryDF() })
   
   output$dataset_info = renderText(
     ifelse(as.numeric(input$which_dataset) == 0,
@@ -58,7 +61,7 @@ shinyServer(function(input, output) {
                         "Proceed to the Data Resource tab to download a resource.")))
   )
   
-  output$dataset_table = renderTable({ datasetMetaDataDF() })
+  output$dataset_table = renderDataTable({ datasetMetaDataDF() })
 
   output$data_resource_info = renderText({
     if (as.numeric(input$which_resource) == 0)
@@ -95,19 +98,77 @@ shinyServer(function(input, output) {
             nrow(datasetMetaDataDF()), "found for dataset.\n",
             "Title:", queryDF()$title[[as.numeric(input$which_dataset)]],"\n",
             "URL:", datasetMetaDataDF()$url[[as.numeric(input$which_resource)]],"\n",
-            "Showing", ifelse(nrow(dataResource()) < 6, nrow(dataResource()), 6), 
-            "of", nrow(dataResource()), "rows in this resource.\n",
+            #"Showing", ifelse(nrow(dataResource()) < 6, nrow(dataResource()), 6), 
+            "Rows:", nrow(dataResource()), "\n",
             "Click 'Download' to download data resource as a CSV.")
   })
   
-  output$data_resource_table = renderTable({ head(dataResource()) })
+  output$data_resource_table = renderDataTable({ dataResource() })
   
   output$download_data_resource = downloadHandler(
     filename = function() paste0("berlin_data_resource_", 
                                  gsub('\\s', '-', Sys.time()), ".csv"),
     content = function(file) {
       write.csv(dataResource(), file=file)
-    }
-    )
+    })
+
+  #### Visualizations ####
+  
+  allDatasets = reactive({searchBerlinDatasets('')})
+  
+  allDatasetsDF = reactive({
+    data = data.frame(allDatasets())
+    creators_sort = sort(table(data$creator))
+    data = transform(data, 
+                     pub_date = strptime(pub_date, 
+                                         format="%a, %d %b %Y %X %z"),
+                     creator = factor(creator, levels=names(creators_sort)))
+    data
+  })
+  
+  plotAllDatasets = reactive({
+    plot =       ggplot(allDatasetsDF()) +
+      aes_string(x=paste(input$datasets_x)) +
+      geom_histogram(fill="#C27D38") +
+      theme(axis.text.x = element_text(hjust=1, angle=45))  
+    if (input$datasets_x == "creator") plot = plot + coord_flip()
+    if (input$datasets_x == "pub_date_filtered") 
+      plot = plot %+% subset(allDatasetsDF(), pub_date > as.POSIXct('2000-01-01')) + aes_string(x="pub_date")
+    plot
+  })
+  
+  allDataResources = reactive({
+    data = data.frame(getDatasetMetaData(allDatasets()))
+    data
+  })
+
+  plotAllDataResources = reactive({
+    plot =       ggplot(allDataResources()) +
+      aes_string(x=paste(input$data_resources_x)) +
+      geom_histogram(fill="#C27D38") +
+      theme(axis.text.x = element_text(hjust=1, angle=45))  
+    if (input$data_resources_x == "") return()
+    plot
+  })
+  
+  output$datasets_plot_info = renderText({ 
+    switch(input$datasets_x,
+           "creator" = "Number of datasets on daten.berlin.de by creator",
+           "pub_date" = "Number of datasets on daten.berlin.de by date of publication\n (unfiltered metadata)",
+           "pub_date_filtered" = "Number of datasets on daten.berlin.de by date of publication\n (filtered for plausible dates)")
+    })
+  
+  output$datasets_plot = renderPlot({ 
+    print(plotAllDatasets()) 
+    })
+  
+  output$data_resources_plot_info = renderText({ 
+    switch(input$data_resources_x,
+           "format" = "Number of data resources on daten.berlin.de by resource format",
+           "language" = "Number of data resources on daten.berlin.de by resource language",
+           "scheme" = "Number of data resources on daten.berlin.de by URL scheme")
+  })
+ 
+  output$data_resources_plot = renderPlot({ print(plotAllDataResources()) })
   
 })
