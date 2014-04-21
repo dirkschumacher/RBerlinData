@@ -15,7 +15,7 @@ test_bdd <- structure(list(
 test_that("berlin_data_dataset methods give correct output", {
   expect_true(is.berlin_data_dataset(test_bdd))
   expect_output(summary(test_bdd), '1 resource')
-  expect_equivalent(dim(as.data.frame(test_bdd)), c(1, 4))
+  expect_equivalent(dim(as.data.frame(test_bdd)), c(1, 6))
   expect_equivalent(resources(test_bdd)[[1]], test_bdr)
   expect_equivalent(test_bdd, getDatasetMetaData(test_bdd))
 })

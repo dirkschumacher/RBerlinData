@@ -40,7 +40,7 @@ test_that("berlin-data-list gives correct output for base generic methods", {
   expect_true(is.berlin_data_list(test_bl1))
   expect_equivalent(class(test_bl1), class(test_bl2[1]))
   expect_that(class(test_bl1), not(is_equivalent_to(class(test_bl2[[1]]))))
-  expect_equivalent(dim(as.data.frame(test_bl1)), c(3, 5))
+  expect_equivalent(dim(as.data.frame(test_bl1)), c(3, 7))
   expect_equivalent(dim(as.data.frame(test_bl2)), c(2, 4))
   expect_output(summary(test_bl2), '2 datasets')
 })

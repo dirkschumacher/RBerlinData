@@ -29,7 +29,7 @@ summary.berlin_data_list <- function(object, ...) {
 
 #' @export
 as.data.frame.berlin_data_list <- function(x, ...) {
-  y <- lapply(x, as.data.frame)
+  y <- lapply(x, as.data.frame, ...)
   resource_list_lengths <- unlist(sapply(y, nrow))
   y <- do.call(rbind, y)
   y$title <- factor(y$title)

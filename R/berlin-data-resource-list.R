@@ -29,8 +29,10 @@ summary.berlin_data_resource_list <- function(object, ...) {
 
 #' @export
 as.data.frame.berlin_data_resource_list <- function(x, ...) {
-  y <- lapply(x, as.data.frame)
+  y <- lapply(x, as.data.frame, ...)
+  resource_list_lengths <- unlist(sapply(y, nrow))
   y <- do.call(rbind, y)
+  y$position_in_resource_list <- rep(1:length(resource_list_lengths), times=resource_list_lengths)
   y
 }
 

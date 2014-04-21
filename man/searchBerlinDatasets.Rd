@@ -20,6 +20,6 @@ dataset <- getDatasetMetaData(result[[2]])
 summary(dataset)
 resource_list <- resources(dataset)
 summary(resource_list)
-data <- download(resource_list[[1]])
+data <- download(resource_list[[1]], sep=',')
 }
 
