@@ -82,6 +82,14 @@ getDatasetMetaData <- function(where, ...) {
 #' # turn off all individual notifications for downloads
 #' data <- download(dataset, message.on.fail=FALSE, message.on.succeed=FALSE)
 #' 
+#' # pass in other arguments to download function
+#' result <- searchBerlinDatasets(query = "stolpersteine")
+#' dataset <- getDatasetMetaData(result[[2]])
+#' resource_list <- resources(dataset)
+#' data <- download(resource_list[[1]])
+#' # gives wrong output, so we try a different argument for 'sep'
+#' data <- download(resource_list[[1]], sep=',')
+#' 
 download <- function(x, ...) {
   UseMethod("download")
 }
@@ -109,7 +117,7 @@ resources <- function(object, ...) {
 #' summary(dataset)
 #' resource_list <- resources(dataset)
 #' summary(resource_list)
-#' data <- download(resource_list[[1]])
+#' data <- download(resource_list[[1]], sep=',')
 #' 
 searchBerlinDatasets <- function(query, ...) {
   stopifnot(length(query) == 1 && is.character(query))
@@ -201,9 +209,12 @@ searchData <- function(query,
   cleaned_items <- lapply(items, function(item) {
     structure(
       list(
-        description = xmlValue(getNodeSet(item, "description")[[1]]),
         title = xmlValue(getNodeSet(item, "title")[[1]]),
-        link = xmlValue(getNodeSet(item, "link")[[1]])
+        description = xmlValue(getNodeSet(item, "description")[[1]]),
+        link = xmlValue(getNodeSet(item, "link")[[1]]),
+        pub_date = xmlValue(getNodeSet(item, "pubDate")[[1]]),
+        creator = gsub('^.*">|</a>$', '',
+                       xmlValue(getNodeSet(item, "dc:creator", namespaces=c(dc="http://purl.org/dc/elements/1.1/"))[[1]]))
       ),
       class = "berlin_data_dataset_info"
     )

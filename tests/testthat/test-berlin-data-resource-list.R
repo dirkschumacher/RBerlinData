@@ -14,7 +14,7 @@ test_bdrl <- structure(list(
 test_that("berlin-data-resource-list methods give correct output", {
   expect_true(is.berlin_data_resource_list(test_bdrl))
   expect_output(summary(test_bdrl), '2 resources')
-  expect_equivalent(dim(as.data.frame(test_bdrl)), c(2, 4))
+  expect_equivalent(dim(as.data.frame(test_bdrl)), c(2, 5))
   expect_equivalent(class(test_bdrl[1]), "berlin_data_resource_list")
 })
 

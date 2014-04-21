@@ -45,5 +45,13 @@ data <- download(dataset, message.on.fail=FALSE)
 
 # turn off all individual notifications for downloads
 data <- download(dataset, message.on.fail=FALSE, message.on.succeed=FALSE)
+
+# pass in other arguments to download function
+result <- searchBerlinDatasets(query = "stolpersteine")
+dataset <- getDatasetMetaData(result[[2]])
+resource_list <- resources(dataset)
+data <- download(resource_list[[1]])
+# gives wrong output, so we try a different argument for 'sep'
+data <- download(resource_list[[1]], sep=',')
 }
 

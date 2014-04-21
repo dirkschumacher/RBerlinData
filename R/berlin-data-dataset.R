@@ -31,9 +31,8 @@ as.data.frame.berlin_data_dataset <- function(x, ...) {
     message(paste("No resources located for dataset: ", x$title))
     return()
   }
-  y <- lapply(x$resources, as.data.frame)
-  y <- do.call(rbind, y)
-  y$title <- x$title
+  y <- as.data.frame(x$resources, ...)
+  y$dataset_title <- x$title
   y
 }
 
