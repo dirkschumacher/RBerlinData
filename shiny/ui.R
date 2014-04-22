@@ -52,7 +52,6 @@ shinyUI(navbarPage("BerlinData",
                                            column(
                                              9,
                                              mainPanel(
-                                               progressInit(),
                                                verbatimTextOutput(outputId="data_resource_info"),
                                                dataTableOutput(outputId="data_resource_table"))))
                                 ) 

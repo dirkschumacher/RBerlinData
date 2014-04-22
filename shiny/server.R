@@ -119,10 +119,12 @@ shinyServer(function(input, output) {
   allDatasetsDF = reactive({
     data = data.frame(allDatasets())
     creators_sort = sort(table(data$creator))
+    locale = Sys.getlocale(category="LC_TIME")
+    Sys.setlocale(category="LC_TIME", locale="C")
     data = transform(data, 
-                     pub_date = strptime(pub_date, 
-                                         format="%a, %d %b %Y %X %z"),
+                     pub_date = strptime(pub_date, format="%a, %d %b %Y %X %z"),
                      creator = factor(creator, levels=names(creators_sort)))
+    Sys.setlocale(category="LC_TIME", locale=locale)
     data
   })
   
