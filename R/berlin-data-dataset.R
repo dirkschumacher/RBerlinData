@@ -43,6 +43,11 @@ summary.berlin_data_dataset <- function(object, ...) {
   cat(summary(object$resources))
 }
 
+#' @export
+print.berlin_data_dataset <- function(x, ...) {
+  summary(x, ...)
+}
+
 # roxygen2 doesn't recognize 'is.x' as an S3 method, requires manual documentation
 #' @method berlin_data_dataset is
 is.berlin_data_dataset <- function(x) inherits(x, "berlin_data_dataset")

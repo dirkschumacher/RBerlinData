@@ -28,6 +28,11 @@ summary.berlin_data_list <- function(object, ...) {
 }
 
 #' @export
+print.berlin_data_list <- function(x, ...) {
+  summary(x, ...)
+}
+
+#' @export
 as.data.frame.berlin_data_list <- function(x, ...) {
   y <- lapply(x, as.data.frame, ...)
   resource_list_lengths <- unlist(sapply(y, nrow))
