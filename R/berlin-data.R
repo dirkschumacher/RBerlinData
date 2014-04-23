@@ -197,7 +197,7 @@ searchData <- function(query,
                            error=function(e) {
                              if (xml.url=="http://daten.berlin.de/datensaetze/rss.xml") {
                                message('Could not establish connection to daten.berlin.de')
-                               data(cached_datasets_feed)
+                               data(cached_datasets_feed, envir = environment())
                                message('Using stored list of Berlin datasets')
                                message(paste0('Last updated: ', attr(cached_datasets_feed, 'last_updated')))
                                datasets_feed = xmlParse(cached_datasets_feed)

@@ -33,6 +33,11 @@ summary.berlin_data_resource <- function(object, ...) {
 }
 
 #' @export
+print.berlin_data_resource <- function(x, ...) {
+  summary(x, ...)
+}
+
+#' @export
 as.data.frame.berlin_data_resource <- function(x, ...) {
   y <- as.data.frame.list(x, ...)
   y$scheme <- factor(strsplit(x$url, '://')[[1]][1])
