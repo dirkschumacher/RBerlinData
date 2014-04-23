@@ -21,6 +21,7 @@ NULL
 #' @export
 #' @examples
 #' # query
+#' \dontrun{
 #' result <- searchBerlinDatasets(query = "vornamen")
 #' summary(result)
 #' 
@@ -39,7 +40,7 @@ NULL
 #' metadata <- getDatasetMetaData(result)
 #' summary(metadata)
 #' summary(metadata[[1]])
-#' 
+#' }
 getDatasetMetaData <- function(where, ...) {
   UseMethod("getDatasetMetaData")
 }
@@ -55,6 +56,7 @@ getDatasetMetaData <- function(where, ...) {
 #' @examples
 #' 
 #' # query, select a dataset, get its metadata
+#' \dontrun{
 #' result <- searchBerlinDatasets(query = "vornamen")
 #' summary(result)
 #' dataset <- getDatasetMetaData(result[[2]]) 
@@ -65,7 +67,6 @@ getDatasetMetaData <- function(where, ...) {
 #' data <- download(resource)
 #' # returns a data.frame
 #' class(data)
-#' 
 #' # or download multiple resources simultaneously
 #' data <- download(resources(dataset)[1:6])
 #' # returns a list of data.frames
@@ -89,7 +90,7 @@ getDatasetMetaData <- function(where, ...) {
 #' data <- download(resource_list[[1]])
 #' # gives wrong output, so we try a different argument for 'sep'
 #' data <- download(resource_list[[1]], sep=',')
-#' 
+#' }
 download <- function(x, ...) {
   UseMethod("download")
 }
@@ -111,6 +112,7 @@ resources <- function(object, ...) {
 #' @param ... optional additional arguments
 #' @export
 #' @examples
+#' \dontrun{
 #' result <- searchBerlinDatasets(query = "stolpersteine")
 #' summary(result)
 #' dataset <- getDatasetMetaData(result[[2]])
@@ -118,6 +120,7 @@ resources <- function(object, ...) {
 #' resource_list <- resources(dataset)
 #' summary(resource_list)
 #' data <- download(resource_list[[1]], sep=',')
+#' }
 #' 
 searchBerlinDatasets <- function(query, ...) {
   stopifnot(length(query) == 1 && is.character(query))

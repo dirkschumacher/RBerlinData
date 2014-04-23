@@ -19,6 +19,7 @@ Downloads a resource
 }
 \examples{
 # query, select a dataset, get its metadata
+\dontrun{
 result <- searchBerlinDatasets(query = "vornamen")
 summary(result)
 dataset <- getDatasetMetaData(result[[2]])
@@ -29,7 +30,6 @@ resource <- resources(dataset)[[23]]
 data <- download(resource)
 # returns a data.frame
 class(data)
-
 # or download multiple resources simultaneously
 data <- download(resources(dataset)[1:6])
 # returns a list of data.frames
@@ -53,5 +53,6 @@ resource_list <- resources(dataset)
 data <- download(resource_list[[1]])
 # gives wrong output, so we try a different argument for 'sep'
 data <- download(resource_list[[1]], sep=',')
+}
 }
 

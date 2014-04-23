@@ -15,6 +15,7 @@ Gets metadata for a dataset or list of datasets
 }
 \examples{
 # query
+\dontrun{
 result <- searchBerlinDatasets(query = "vornamen")
 summary(result)
 
@@ -33,5 +34,6 @@ metadata <- getDatasetMetaData(result[[2]])
 metadata <- getDatasetMetaData(result)
 summary(metadata)
 summary(metadata[[1]])
+}
 }
 
