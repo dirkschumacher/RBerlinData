@@ -1,4 +1,4 @@
-#' @import XML stringr
+#' @import XML stringr rjson
 NULL
 
 ## Data ###

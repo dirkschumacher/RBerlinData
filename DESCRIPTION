@@ -14,7 +14,7 @@ Depends:
     R (>= 2.13.0)
 Imports:
     XML (>= 3.95),
-    stringr
-Suggests:
-    testthat,
+    stringr,
     rjson
+Suggests:
+    testthat

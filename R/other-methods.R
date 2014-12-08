@@ -80,7 +80,6 @@ download.TXT <- function(x, message.on.fail=TRUE, ..., sep=',') {
 #' @param ... optional additional arguments to download function
 #' @export
 download.JSON <- function(x, message.on.fail=TRUE, ..., parse.to.df=TRUE) {
-  require(rjson)
   result <- tryCatch(fromJSON(file=x, ...),
                      error = function(e) {
                        if(message.on.fail) {
