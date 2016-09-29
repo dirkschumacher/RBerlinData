@@ -4,7 +4,7 @@ BerlinData
 
 The `R` package `BerlinData` gives you easy access to [data.berlin.de](http://daten.berlin.de). This is currently the development version.
 
-THIS PACKAGE DOES NOT FULLY WORK ANYMORE. If someone wants to fix it, please send a PR.
+THIS PACKAGE DOES NOT FULLY WORK ANYMORE. It is abandoned :( If someone wants to fix it, please send a PR.
 
 Also check out the [project website](http://dirkschumacher.github.io/RBerlinData).
 
